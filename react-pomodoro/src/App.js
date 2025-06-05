@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
@@ -10,6 +10,83 @@ function App() {
   const [workTime, setWorkTime] = useState(25);
   const [breakTime, setBreakTime] = useState(5);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = useRef(null);
+
+  // Inicializar o áudio quando o componente montar
+  useEffect(() => {
+    const audio = new Audio();
+    
+    // Configurar o áudio com múltiplos formatos para melhor compatibilidade
+    audio.src = './sound/alarm-clock-90867.mp3';
+    audio.type = 'audio/mpeg';
+    audio.volume = volume;
+    audio.preload = 'auto';
+    
+    // Adicionar listeners para eventos de áudio
+    audio.addEventListener('error', (e) => {
+      console.error('Erro no carregamento do áudio:', e);
+      console.error('Detalhes do erro:', e.target.error);
+    });
+
+    audio.addEventListener('canplaythrough', () => {
+      console.log('Áudio carregado com sucesso');
+    });
+
+    // Tentar carregar o áudio
+    audio.load();
+    
+    audioRef.current = audio;
+
+    // Função para testar o som
+    const testSound = async () => {
+      if (!audioRef.current) return;
+      
+      try {
+        // Verificar se o áudio está pronto para reprodução
+        if (audioRef.current.readyState >= 2) {
+          audioRef.current.currentTime = 0;
+          const playPromise = audioRef.current.play();
+          
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                setTimeout(() => {
+                  if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.currentTime = 0;
+                  }
+                }, 1000);
+              })
+              .catch(error => {
+                console.error('Erro na promessa de reprodução:', error);
+              });
+          }
+        } else {
+          console.log('Áudio ainda não está pronto para reprodução');
+        }
+      } catch (error) {
+        console.error('Erro ao testar o som:', error);
+      }
+    };
+
+    // Testar o som após um pequeno delay para garantir que o áudio foi carregado
+    setTimeout(testSound, 1000);
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, [volume]);
+
+  // Atualizar o volume quando ele mudar
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   useEffect(() => {
     let interval = null;
@@ -18,17 +95,14 @@ function App() {
       interval = setInterval(() => {
         if (seconds === 0) {
           if (minutes === 0) {
-            // Tempo acabou
             clearInterval(interval);
             setIsActive(false);
             playAlarm();
             
             if (!isBreak) {
-              // Se estava em trabalho, vai para pausa
               setMinutes(breakTime);
               setIsBreak(true);
             } else {
-              // Se estava em pausa, volta para trabalho
               setMinutes(workTime);
               setIsBreak(false);
               setCycles(prev => prev + 1);
@@ -46,9 +120,48 @@ function App() {
     return () => clearInterval(interval);
   }, [isActive, minutes, seconds, isBreak, workTime, breakTime]);
 
-  const playAlarm = () => {
-    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-alarm-digital-clock-beep-989.mp3');
-    audio.play();
+  const playAlarm = async () => {
+    if (!audioRef.current) return;
+    
+    try {
+      if (audioRef.current.readyState >= 2) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.loop = true; // Ativar loop
+        const playPromise = audioRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.error('Erro ao tocar o som:', error);
+            // Tentar tocar o som novamente após interação do usuário
+            const playOnClick = async () => {
+              try {
+                if (audioRef.current && audioRef.current.readyState >= 2) {
+                  audioRef.current.loop = true;
+                  await audioRef.current.play();
+                }
+                document.removeEventListener('click', playOnClick);
+              } catch (error) {
+                console.error('Erro ao tocar o som após clique:', error);
+              }
+            };
+            document.addEventListener('click', playOnClick);
+          });
+        }
+
+        // Parar o som após 7 segundos
+        setTimeout(() => {
+          if (audioRef.current) {
+            audioRef.current.loop = false;
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
+        }, 7000);
+      } else {
+        console.log('Áudio ainda não está pronto para reprodução');
+      }
+    } catch (error) {
+      console.error('Erro ao tocar o som:', error);
+    }
   };
 
   const toggleTimer = () => {
@@ -74,8 +187,52 @@ function App() {
     setIsConfigOpen(false);
   };
 
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+  };
+
+  const testSound = async () => {
+    if (!audioRef.current) return;
+    
+    try {
+      if (audioRef.current.readyState >= 2) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.loop = true; // Ativar loop
+        const playPromise = audioRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              // Parar o som após 7 segundos
+              setTimeout(() => {
+                if (audioRef.current) {
+                  audioRef.current.loop = false;
+                  audioRef.current.pause();
+                  audioRef.current.currentTime = 0;
+                }
+              }, 7000);
+            })
+            .catch(error => {
+              console.error('Erro na promessa de reprodução:', error);
+            });
+        }
+      } else {
+        console.log('Áudio ainda não está pronto para reprodução');
+      }
+    } catch (error) {
+      console.error('Erro ao testar o som:', error);
+    }
+  };
+
   return (
     <div className="App">
+      <audio
+        ref={audioRef}
+        src="./sound/alarm-clock-90867.mp3"
+        preload="auto"
+        style={{ display: 'none' }}
+      />
       <div className="pomodoro-container">
         <h1>Pomodoro Timer</h1>
         <div className="timer">
@@ -117,6 +274,20 @@ function App() {
                 onChange={(e) => setBreakTime(Number(e.target.value))}
                 disabled={isActive}
               />
+            </div>
+            <div className="config-item">
+              <label>Volume do Alarme:</label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={volume}
+                onChange={handleVolumeChange}
+              />
+              <button onClick={testSound} className="test-sound-btn">
+                Testar Som
+              </button>
             </div>
             <button onClick={handleConfigSave}>Salvar</button>
           </div>

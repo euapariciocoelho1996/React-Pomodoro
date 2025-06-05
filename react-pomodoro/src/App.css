@@ -4,20 +4,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #8B0000 0%, #FF0000 100%);
 }
 
 .pomodoro-container {
   background: rgba(255, 255, 255, 0.95);
   padding: 2rem;
   border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.2);
   width: 90%;
   max-width: 400px;
 }
 
 h1 {
-  color: #2a5298;
+  color: #8B0000;
   margin-bottom: 2rem;
   font-size: 2rem;
 }
@@ -29,7 +29,7 @@ h1 {
 .timer h2 {
   font-size: 4rem;
   margin: 0;
-  color: #1e3c72;
+  color: #8B0000;
   font-family: 'Courier New', monospace;
 }
 
@@ -52,12 +52,12 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #2a5298;
+  background-color: #8B0000;
   color: white;
 }
 
 button:hover {
-  background-color: #1e3c72;
+  background-color: #FF0000;
   transform: translateY(-2px);
 }
 
@@ -68,12 +68,12 @@ button:active {
 .config-panel {
   margin-top: 2rem;
   padding: 1.5rem;
-  background: rgba(42, 82, 152, 0.1);
+  background: rgba(139, 0, 0, 0.1);
   border-radius: 10px;
 }
 
 .config-panel h3 {
-  color: #2a5298;
+  color: #8B0000;
   margin-bottom: 1rem;
 }
 
@@ -90,16 +90,60 @@ button:active {
   font-size: 0.9rem;
 }
 
-.config-item input {
+.config-item input[type="number"] {
   width: 100px;
   padding: 0.5rem;
-  border: 1px solid #2a5298;
+  border: 1px solid #8B0000;
   border-radius: 5px;
   text-align: center;
   font-size: 1rem;
 }
 
+.config-item input[type="range"] {
+  width: 200px;
+  height: 8px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.config-item input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #8B0000;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.config-item input[type="range"]::-webkit-slider-thumb:hover {
+  background: #FF0000;
+}
+
 .config-item input:disabled {
   background-color: #f0f0f0;
   cursor: not-allowed;
+}
+
+.test-sound-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  background-color: #8B0000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.test-sound-btn:hover {
+  background-color: #FF0000;
+  transform: translateY(-2px);
+}
+
+.test-sound-btn:active {
+  transform: translateY(0);
 }
