@@ -7,11 +7,11 @@ const formatTime = (minutes, seconds) => {
   return `${formattedMinutes}:${formattedSeconds}`;
 };
 
-const Timer = ({ minutes, seconds, isBreak, cycles }) => {
+const Timer = ({ minutes, seconds, isBreak, cycles, workLabel, breakLabel }) => {
   return (
     <div className="timer">
       <h2>{formatTime(minutes, seconds)}</h2>
-      <p>{isBreak ? 'Pausa' : 'Trabalho'}</p>
+      <p>{isBreak ? breakLabel : workLabel}</p>
       <p>Ciclos completados: {cycles}</p>
     </div>
   );

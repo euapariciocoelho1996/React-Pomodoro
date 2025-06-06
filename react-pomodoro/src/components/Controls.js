@@ -14,7 +14,13 @@ const Controls = ({
   handleVolumeChange,
   testSound,
   stopSound,
-  handleConfigSave
+  handleConfigSave,
+  taskName,
+  setTaskName,
+  workLabel,
+  breakLabel,
+  setWorkLabel,
+  setBreakLabel
 }) => {
   return (
     <div className="controls">
@@ -33,6 +39,12 @@ const Controls = ({
         testSound={testSound}
         stopSound={stopSound}
         handleConfigSave={handleConfigSave}
+        taskName={taskName}
+        setTaskName={setTaskName}
+        workLabel={workLabel}
+        breakLabel={breakLabel}
+        setWorkLabel={setWorkLabel}
+        setBreakLabel={setBreakLabel}
       />
     </div>
   );

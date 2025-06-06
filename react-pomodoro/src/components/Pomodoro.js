@@ -14,6 +14,9 @@ const Pomodoro = () => {
   const [breakTime, setBreakTime] = useState(5);
   const [volume, setVolume] = useState(0.5);
   const [audio, setAudio] = useState(null);
+  const [taskName, setTaskName] = useState('Pomodoro Timer');
+  const [workLabel, setWorkLabel] = useState('Trabalho');
+  const [breakLabel, setBreakLabel] = useState('Pausa');
 
   useEffect(() => {
     let interval = null;
@@ -59,6 +62,9 @@ const Pomodoro = () => {
     setMinutes(workTime);
     setSeconds(0);
     setCycles(0);
+    setTaskName('Pomodoro Timer');
+    setWorkLabel('Trabalho');
+    setBreakLabel('Pausa');
   };
 
   const handleVolumeChange = (e) => {
@@ -88,12 +94,14 @@ const Pomodoro = () => {
 
   return (
     <div className="pomodoro-container">
-      <h1>Pomodoro Timer</h1>
+      <h1>{taskName}</h1>
       <Timer
         minutes={minutes}
         seconds={seconds}
         isBreak={isBreak}
         cycles={cycles}
+        workLabel={workLabel}
+        breakLabel={breakLabel}
       />
       <Controls
         isActive={isActive}
@@ -108,6 +116,12 @@ const Pomodoro = () => {
         testSound={testSound}
         stopSound={stopSound}
         handleConfigSave={handleConfigSave}
+        setTaskName={setTaskName}
+        taskName={taskName}
+        setWorkLabel={setWorkLabel}
+        setBreakLabel={setBreakLabel}
+        workLabel={workLabel}
+        breakLabel={breakLabel}
       />
       <AudioPlayer
         volume={volume}
