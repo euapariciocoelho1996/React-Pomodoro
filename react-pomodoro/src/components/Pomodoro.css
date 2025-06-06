@@ -1,0 +1,64 @@
+.pomodoro-container {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  gap: 1rem;
+}
+
+.pomodoro-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, #ffcccc, #ff9999);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.pomodoro-container h1 {
+  color: #cc0000;
+  margin: 0;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .pomodoro-container {
+    width: 90vw;
+    height: 90vw;
+    max-width: 500px;
+    max-height: 500px;
+    padding: 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .pomodoro-container h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .pomodoro-container {
+    width: 95vw;
+    height: 95vw;
+    padding: 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .pomodoro-container h1 {
+    font-size: 1.5rem;
+  }
+} 

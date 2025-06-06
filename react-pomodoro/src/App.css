@@ -2,9 +2,8 @@
   text-align: center;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #FF0000; /* Fundo vermelho */
+  flex-direction: column;
+  background: #f5f7fa;
 }
 
 .pomodoro-container {
