@@ -41,8 +41,8 @@
 .config-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1rem 0;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
 
 .config-item {
@@ -59,7 +59,7 @@
 
 .swal2-input {
   width: 100% !important;
-  margin: 0.5rem 0 !important;
+  margin: 0 !important;
   padding: 0.8rem !important;
   border: 2px solid #ddd !important;
   border-radius: 8px !important;
@@ -98,7 +98,7 @@
 .sound-buttons {
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.3rem;
 }
 
 .test-sound-btn, .stop-sound-btn {

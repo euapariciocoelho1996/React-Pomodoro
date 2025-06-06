@@ -7,6 +7,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
+  height: 60px; /* Altura fixa do header */
 }
 
 .header-content {

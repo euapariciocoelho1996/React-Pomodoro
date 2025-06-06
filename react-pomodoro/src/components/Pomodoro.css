@@ -5,8 +5,8 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: 480px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,10 +39,11 @@
   .pomodoro-container {
     width: 90vw;
     height: 90vw;
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 450px;
+    max-height: 450px;
     padding: 1.5rem;
     gap: 0.8rem;
+    margin-top: 1rem;
   }
 
   .pomodoro-container h1 {
@@ -56,6 +57,7 @@
     height: 95vw;
     padding: 1.2rem;
     gap: 0.6rem;
+    margin-top: 0.5rem;
   }
 
   .pomodoro-container h1 {
