@@ -1,0 +1,15 @@
+.timer {
+  margin: 2rem 0;
+}
+
+.timer h2 {
+  font-size: 4rem;
+  margin: 0;
+  color: #8B0000;
+  font-family: 'Courier New', monospace;
+}
+
+.timer p {
+  color: #666;
+  margin: 0.5rem 0;
+} 
