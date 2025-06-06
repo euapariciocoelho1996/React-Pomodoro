@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Timer from './components/Timer';
 import Controls from './components/Controls';
-import ConfigPanel from './components/ConfigPanel';
 import AudioPlayer from './components/AudioPlayer';
 
 function App() {
@@ -13,7 +12,6 @@ function App() {
   const [cycles, setCycles] = useState(0);
   const [workTime, setWorkTime] = useState(25);
   const [breakTime, setBreakTime] = useState(5);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef(null);
 
@@ -115,7 +113,6 @@ function App() {
       setMinutes(workTime);
       setSeconds(0);
     }
-    setIsConfigOpen(false);
   };
 
   const handleVolumeChange = (e) => {
@@ -155,6 +152,13 @@ function App() {
     }
   };
 
+  const stopSound = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <div className="App">
       <AudioPlayer volume={volume} onAudioReady={handleAudioReady} />
@@ -171,21 +175,16 @@ function App() {
           isActive={isActive}
           toggleTimer={toggleTimer}
           resetTimer={resetTimer}
-          openConfig={() => setIsConfigOpen(!isConfigOpen)}
+          workTime={workTime}
+          breakTime={breakTime}
+          volume={volume}
+          setWorkTime={setWorkTime}
+          setBreakTime={setBreakTime}
+          handleVolumeChange={handleVolumeChange}
+          testSound={testSound}
+          stopSound={stopSound}
+          handleConfigSave={handleConfigSave}
         />
-        {isConfigOpen && (
-          <ConfigPanel
-            workTime={workTime}
-            breakTime={breakTime}
-            volume={volume}
-            isActive={isActive}
-            setWorkTime={setWorkTime}
-            setBreakTime={setBreakTime}
-            handleVolumeChange={handleVolumeChange}
-            testSound={testSound}
-            handleConfigSave={handleConfigSave}
-          />
-        )}
       </div>
     </div>
   );

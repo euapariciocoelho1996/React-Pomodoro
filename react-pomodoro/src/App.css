@@ -8,22 +8,58 @@
 }
 
 .pomodoro-container {
-  background: rgba(255, 255, 255, 0.95);
+  background-color: #1a1a1a;
   padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(139, 0, 0, 0.2);
-  width: 90%;
-  max-width: 400px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  position: relative;
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  gap: 1rem;
 }
 
-h1 {
-  color: #8B0000;
-  margin-bottom: 2rem;
-  font-size: 2rem;
+.pomodoro-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background: linear-gradient(45deg, #8B0000, #FF0000);
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.pomodoro-container h1 {
+  color: #FF0000;
+  margin: 0;
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .timer {
-  margin: 2rem 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  padding: 0 1rem;
 }
 
 .timer h2 {
@@ -36,13 +72,6 @@ h1 {
 .timer p {
   color: #666;
   margin: 0.5rem 0;
-}
-
-.controls {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
 button {
@@ -146,4 +175,32 @@ button:active {
 
 .test-sound-btn:active {
   transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .pomodoro-container {
+    width: 90vw;
+    height: 90vw;
+    max-width: 500px;
+    max-height: 500px;
+    padding: 1.5rem;
+    gap: 0.8rem;
+  }
+
+  .pomodoro-container h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .pomodoro-container {
+    width: 95vw;
+    height: 95vw;
+    padding: 1.2rem;
+    gap: 0.6rem;
+  }
+
+  .pomodoro-container h1 {
+    font-size: 1.5rem;
+  }
 }
